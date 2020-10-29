@@ -63,15 +63,14 @@ function App(props) {
       <button onClick={ togglePersonsHandler }>Toggle Persons</button>
       {
         personsState.showPersons ?
-          <div>
-            <Person
-              name={ personsState.persons[0].name }
-              age={ personsState.persons[0].age }
-              click={ () => switchNameHandler('secret yeah!') }
-              changed={ nameChangedHandler }>My Hobbies: 🐉 Baseball</Person>
-            <Person name={ personsState.persons[1].name } />
-            <Person name={ personsState.persons[2].name } />
-          </div> : null
+        <div>
+          {personsState.persons.map(person => {
+            return <Person
+            name={ person.name }
+            age={ person.age }
+            />
+          })}
+        </div> : null
       }
     </div>
   );
