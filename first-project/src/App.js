@@ -6,9 +6,9 @@ function App(props) {
 
   const [ personsState, setPersonsState ] = useState({
     persons: [
-      {name: 'yuji', age: 32},
-      {name: 'yabai', age: 28},
-      {name: 'sugoi', age: 29}
+      {id: 'iaia', name: 'yuji', age: 32},
+      {id: 'akaka', name: 'yabai', age: 28},
+      {id: 'lals', name: 'sugoi', age: 29}
     ],
     otherState: 'some other value',
     showPersons: false
@@ -68,6 +68,7 @@ function App(props) {
             return <Person
             name={ person.name }
             age={ person.age }
+            key={ person.id }
             />
           })}
         </div> : null
