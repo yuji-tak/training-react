@@ -29,7 +29,10 @@ function App(props) {
       <h1>Hello world!</h1>
       <p>this is it</p>
       <button onClick={ switchNameHandler }>Switch Name</button>
-      <Person name={ personsState.persons[0].name } age={ personsState.persons[0].age }>My Hobbies: baseball</Person>
+      <Person
+        name={ personsState.persons[0].name }
+        age={ personsState.persons[0].age }
+        click={ switchNameHandler }>My Hobbies: baseball</Person>
       <Person name={ personsState.persons[1].name } />
       <Person name={ personsState.persons[2].name } />
     </div>
