@@ -19,7 +19,8 @@ function App(props) {
         {name: 'changed-yuji', age: 33},
         {name: 'yabai', age: 28},
         {name: 'sugoi', age: 29}
-      ]
+      ],
+      otherState: 'some other value'
     })
   }
 
