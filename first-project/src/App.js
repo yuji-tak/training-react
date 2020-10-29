@@ -35,9 +35,16 @@ function App(props) {
     })
   }
 
+  const style = {
+    backgroundColor: 'tomato'
+  }
+  if (personsState.persons[0].name === 'lucky') {
+    style.backgroundColor =  'skyblue'
+  }
+
   return (
     <div className="App">
-      <h1>Hello world!</h1>
+      <h1 style={ style }>Hello world!</h1>
       <p>this is it</p>
       <button onClick={ () => switchNameHandler('yeah!') }>Switch Name</button>
       <Person
