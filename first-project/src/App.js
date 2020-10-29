@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
+import Person from './Person/Person';
 
 function App() {
   return (
     <div className="App">
       <h1>Hello world!</h1>
       <p>this is it</p>
+      <Person name="yuji" age="32">My Hobbies: baseball</Person>
+      <Person name="yabai" />
+      <Person name="sugoi"/>
     </div>
   );
 
