@@ -5,7 +5,11 @@ import classes from './BurgerIngredient.module.css';
 
 class BurgerIngredient extends Component {
   render() {
+    // なぜreturn()がいらないのか？
+
     let ingredient = null;
+
+    console.log('[BurgerIngredient.js]')
 
     switch (this.props.type) {
       case ('bread-bottom'):
