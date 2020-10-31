@@ -9,8 +9,6 @@ class BurgerIngredient extends Component {
 
     let ingredient = null;
 
-    console.log('[BurgerIngredient.js]')
-
     switch (this.props.type) {
       case ('bread-bottom'):
         ingredient = <div className={ classes.BreadBottom }></div>;
