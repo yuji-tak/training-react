@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 import Burger from '../../Components/Burger/_Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
+// modalフォルダ名はミス。。。
+import Modal from '../../Components/UI/modal/_Modal';
+import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
+
 // propsはimport元からのデータを取得
 
 // containersだけがstateのシングルソースという感じかな？
@@ -85,6 +89,9 @@ class BurgerBuilder extends Component {
 
     return (
       <>
+        <Modal>
+          <OrderSummary ingredients={ this.state.ingredients }/>
+        </Modal>
         <Burger ingredients={ this.state.ingredients } />
         <BuildControls
           ingredientAdded={ this.addIngredientHandler }
