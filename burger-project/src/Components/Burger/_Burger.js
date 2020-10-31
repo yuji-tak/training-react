@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
+// propsはimport元からのデータを取得
 const burger = (props) => {
   let transformedIngredients = Object.keys(props.ingredients)
     .map(igKey => {
@@ -21,6 +22,7 @@ const burger = (props) => {
     transformedIngredients = <p>Please start adding ingredients!</p>
   }
 
+  // <コンポーネント type>はコンポーネント経由でimport元にデータを渡す
   return (
     <div className={ classes.Burger }>
       <BurgerIngredient type="bread-top" />
