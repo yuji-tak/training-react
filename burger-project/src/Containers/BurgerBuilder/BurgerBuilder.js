@@ -26,7 +26,8 @@ class BurgerBuilder extends Component {
       meat: 0
     },
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    purchasing: false
   }
 
   // 常に引数で最新のstate.ingredientsを処理している
@@ -78,6 +79,11 @@ class BurgerBuilder extends Component {
     this.updatePurchaseState(updatedIngredients);
   };
 
+  // アロー関数でない場合、undefinedエラー
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  }
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -89,7 +95,7 @@ class BurgerBuilder extends Component {
 
     return (
       <>
-        <Modal>
+        <Modal show={ this.state.purchasing }>
           <OrderSummary ingredients={ this.state.ingredients }/>
         </Modal>
         <Burger ingredients={ this.state.ingredients } />
@@ -98,6 +104,7 @@ class BurgerBuilder extends Component {
           ingredientRemoved={ this.removeIngredientHandler }
           purchasable={ this.state.purchasable }
           disabled={ disabledInfo }
+          ordered={ this.purchaseHandler }
           price={ this.state.totalPrice } />
       </>
     );
