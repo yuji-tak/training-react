@@ -16,10 +16,18 @@ class Layout extends Component {
     this.setState({ showSideDrawer: false })
   }
 
+  sideDrawerToggleHandler = () => {
+    // 非同期的に処理する為にコールバック関数で返している？
+    // setStateの引数はstateオブジェクト
+    this.setState(( prevState ) => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    } );
+  }
+
   render() {
     return (
       <>
-        <Toolbar />
+        <Toolbar DrawerToggleClicked={ this.sideDrawerToggleHandler } />
         {/* open=true closed=setState() */}
         <SideDrawer
           open={ this.state.showSideDrawer }
