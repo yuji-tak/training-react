@@ -9,7 +9,7 @@ class Layout extends Component {
   // なぜclassに書き換えたのか？関数リテラルとの違いは？
 
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   }
 
   sideDrawerClosedHandler = () => {
