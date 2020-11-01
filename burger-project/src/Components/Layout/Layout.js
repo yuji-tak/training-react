@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 // import Aux from '../../hoc/Aux';
 import classes from './Layout.module.css';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
-const layout = ( props ) => (
-  <>
-    <Toolbar />
-    <SideDrawer />
-    <main className={ classes.Content }>
-      { props.children }
-    </main>
-  </>
-);
+class Layout extends Component {
+  // なぜclassに書き換えたのか？関数リテラルとの違いは？
 
-export default layout;
+  state = {
+    showSideDrawer: true
+  }
+
+  sideDrawerClosedHandler = () => {
+    this.setState({ showSideDrawer: false })
+  }
+
+  render() {
+    return (
+      <>
+        <Toolbar />
+        {/* open=true closed=setState() */}
+        <SideDrawer
+          open={ this.state.showSideDrawer }
+          closed={ this.sideDrawerClosedHandler }/>
+        <main className={ classes.Content }>
+          { this.props.children }
+        </main>
+      </>
+    );
+  }
+}
+
+export default Layout;
