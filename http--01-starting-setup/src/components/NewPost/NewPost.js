@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import './NewPost.css';
 
@@ -8,6 +9,20 @@ class NewPost extends Component {
         content: '',
         author: 'Max'
     }
+
+  postDataHandler = () => {
+    const data = {
+      title: this.state.title,
+      body: this.state.content,
+      author: this.state.author
+    };
+
+    // 第二引数でオブジェクトで渡すと、axiosが内部でJSON.stringify()してくれるらしい
+    axios.post('https://jsonplaceholder.typicode.com/posts', data)
+      .then(res => {
+        console.log(res);
+      });
+  }
 
     render () {
         return (
@@ -22,7 +37,8 @@ class NewPost extends Component {
                     <option value="Max">Max</option>
                     <option value="Manu">Manu</option>
                 </select>
-                <button>Add Post</button>
+                {/* アロー関数にして、押下時のみ関数を実行する制御が必要ではないのか */}
+                <button onClick={ this.postDataHandler }>Add Post</button>
             </div>
         );
     }
