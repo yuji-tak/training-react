@@ -18,7 +18,7 @@ class NewPost extends Component {
     };
 
     // 第二引数でオブジェクトで渡すと、axiosが内部でJSON.stringify()してくれるらしい
-    axios.post('https://jsonplaceholder.typicode.com/posts', data)
+    axios.post('/posts', data)
       .then(res => {
         console.log(res);
       });
