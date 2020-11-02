@@ -11,7 +11,8 @@ class Blog extends Component {
 
   state = {
     posts: [],
-    selectedPostId: null
+    selectedPostId: null,
+    error: false
   }
 
   componentDidMount() {
@@ -23,8 +24,11 @@ class Blog extends Component {
             ...post,
             author: 'Yuji'
           }
-        })
-        this.setState({ posts: updatePosts })
+        });
+        this.setState({ posts: updatePosts });
+      })
+      .catch(error => {
+        this.setState({ error: true })
       });
   }
 
@@ -33,14 +37,18 @@ class Blog extends Component {
   }
 
     render () {
+    let posts = <p style={{ textAlign: "center" }}>Something went wrong!!!</p>
+
+    if (!this.state.error) {
       // postsの値のデータ型が配列にしとかないとmap()が使えない
-      const posts = this.state.posts.map(post => {
+      posts = this.state.posts.map(post => {
         return <Post
           key={ post.id }
           title={ post.title }
           author={ post.author }
           clicked={ () => this.postSelectedHandler(post.id) } />
       })
+    }
 
         return (
             <div>
