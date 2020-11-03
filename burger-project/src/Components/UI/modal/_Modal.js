@@ -8,7 +8,7 @@ class Modal extends Component {
   // 何を検証してるのか？？？
   // showが変化した時だけ、このコンポーネントが呼ばれるようにしている？
   shouldComponentUpdate ( nextProps, nextState ) {
-    return nextProps.show !== this.props.show;
+    return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
   }
 
   componentWillUpdate () {

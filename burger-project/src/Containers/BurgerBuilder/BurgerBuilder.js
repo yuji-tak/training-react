@@ -111,10 +111,10 @@ class BurgerBuilder extends Component {
 
     axios.post('/orders.json', order)
       .then(res => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, purchasing: false });
       })
       .catch(error => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, purchasing: false });
       });
   }
 
@@ -123,6 +123,7 @@ class BurgerBuilder extends Component {
       ...this.state.ingredients
     };
     for (let key in disabledInfo) {
+      // 右辺は真偽値を返す
       disabledInfo[key] = disabledInfo[key] <= 0
     }
     // { salad: true, bacon: true, ... }
