@@ -22,16 +22,23 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    },
+    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     purchasing: false,
-    loading: false
+    loading: false,
+    error: false
+  }
+
+  componentDidMount () {
+    // エンドポイント末尾の.jsonがポイント
+    axios.get('https://react-my-burger-ce65e.firebaseio.com/ingredients.json')
+      .then(res => {
+        this.setState({ ingredients: res.data });
+      })
+      .catch(error => {
+        this.setState({ error: true })
+      });
   }
 
   // 常に引数で最新のstate.ingredientsを処理している
@@ -129,12 +136,29 @@ class BurgerBuilder extends Component {
     }
     // { salad: true, bacon: true, ... }
 
-    let orderSummary = <OrderSummary
-    ingredients={ this.state.ingredients }
-    price={ this.state.totalPrice }
-    purchaseCancelled={ this.purchaseCancelHandler }
-    purchaseContinued={ this.purchaseContinueHandler } />
-
+    let orderSummary = null;
+    let burger = this.state.error ? <p>Ingredients cant't be loaded!</p> : <Spinner />;
+    if (this.state.ingredients) {
+      // なんやねんこの書き方？？？
+      // 変数に代入する時もルートコンポーネントをシングルにしないといけないってことか？
+      burger = (
+        <>
+          <Burger ingredients={ this.state.ingredients } />
+          <BuildControls
+            ingredientAdded={ this.addIngredientHandler }
+            ingredientRemoved={ this.removeIngredientHandler }
+            purchasable={ this.state.purchasable }
+            disabled={ disabledInfo }
+            ordered={ this.purchaseHandler }
+            price={ this.state.totalPrice } />
+        </>
+      );
+      orderSummary = <OrderSummary
+        ingredients={ this.state.ingredients }
+        price={ this.state.totalPrice }
+        purchaseCancelled={ this.purchaseCancelHandler }
+        purchaseContinued={ this.purchaseContinueHandler } />;
+    }
     if ( this.state.loading ) {
       orderSummary = <Spinner />
     }
@@ -147,14 +171,7 @@ class BurgerBuilder extends Component {
           {/* OrderSummary or Spinner */}
           { orderSummary }
         </Modal>
-        <Burger ingredients={ this.state.ingredients } />
-        <BuildControls
-          ingredientAdded={ this.addIngredientHandler }
-          ingredientRemoved={ this.removeIngredientHandler }
-          purchasable={ this.state.purchasable }
-          disabled={ disabledInfo }
-          ordered={ this.purchaseHandler }
-          price={ this.state.totalPrice } />
+        { burger }
       </>
     );
   }

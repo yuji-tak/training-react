@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Modal from '../../Components/UI/modal/_Modal';
 
+// WrappedComponentはコンポーネントのロジックを再利用するためのReactにおける応用テクニック
 const withErrorHandler = ( WrappedComponent, axios ) => {
 
   return class extends Component {
@@ -21,7 +22,7 @@ const withErrorHandler = ( WrappedComponent, axios ) => {
     }
 
     errorConfirmedHandler = () => {
-      this.setState({error: null});
+      this.setState({ error: null });
     }
 
     render() {
