@@ -4,8 +4,8 @@ import axios from 'axios';
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
-import './Blog.css';
 import post from '../../components/Post/Post';
+import './Blog.css';
 
 class Blog extends Component {
 
@@ -51,8 +51,16 @@ class Blog extends Component {
     }
 
         return (
-            <div>
-                <section className="Posts">
+            <div className="Blog">
+                <header>
+                  <nav>
+                    <ul>
+                      <li><a href="/">HOME</a></li>
+                      <li><a href="/new-post">New Post</a></li>
+                    </ul>
+                  </nav>
+                </header>
+                <section class="Posts">
                     { posts }
                 </section>
                 <section>
