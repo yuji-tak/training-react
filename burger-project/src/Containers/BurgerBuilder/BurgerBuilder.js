@@ -153,11 +153,13 @@ class BurgerBuilder extends Component {
             price={ this.state.totalPrice } />
         </>
       );
-      orderSummary = <OrderSummary
-        ingredients={ this.state.ingredients }
-        price={ this.state.totalPrice }
-        purchaseCancelled={ this.purchaseCancelHandler }
-        purchaseContinued={ this.purchaseContinueHandler } />;
+      orderSummary = (
+        <OrderSummary
+          ingredients={ this.state.ingredients }
+          price={ this.state.totalPrice }
+          purchaseCancelled={ this.purchaseCancelHandler }
+          purchaseContinued={ this.purchaseContinueHandler } />
+      );
     }
     if ( this.state.loading ) {
       orderSummary = <Spinner />
@@ -168,7 +170,6 @@ class BurgerBuilder extends Component {
         <Modal
           show={ this.state.purchasing }
           modalClosed={ this.purchaseCancelHandler }>
-          {/* OrderSummary or Spinner */}
           { orderSummary }
         </Modal>
         { burger }
