@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Posts.css';
+import { Link } from 'react-router-dom';
 
 import Post from '../../../components/Post/Post';
+import './Posts.css';
 
 class Posts extends Component {
 
@@ -38,11 +39,14 @@ class Posts extends Component {
     if (!this.state.error) {
       // postsの値のデータ型が配列にしとかないとmap()が使えない
       posts = this.state.posts.map(post => {
-        return <Post
-        key={ post.id }
-        title={ post.title }
-        author={ post.author }
-        clicked={ () => this.postSelectedHandler(post.id) } />
+        // ()があると改行が可能になる
+        return (
+        <Link to={ '/' + post.id } key={ post.id }>
+          <Post
+            title={ post.title }
+            author={ post.author }
+            clicked={ () => this.postSelectedHandler(post.id) } />
+          </Link>);
       })
     }
 
