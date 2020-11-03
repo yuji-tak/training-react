@@ -5,6 +5,7 @@ import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 // modalフォルダ名はミス。。。
 import Modal from '../../Components/UI/modal/_Modal';
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
+import axios from '../../_axios-order';
 
 // propsはimport元からのデータを取得
 
@@ -89,7 +90,26 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    alert('You continue!');
+    // this.setState( { loading: true } );
+
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+      customer: {
+        name: 'Max Schwarzmüller',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany'
+        },
+        email: 'test@test.com'
+      },
+      deliveryMethod: 'fastest'
+    }
+
+    axios.post('/orders.json', order)
+      .then(res => console.log(res))
+      .catch(error => console.log(error));
   }
 
   render() {
