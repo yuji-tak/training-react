@@ -5,6 +5,7 @@ import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 // modalフォルダ名はミス。。。
 import Modal from '../../Components/UI/modal/_Modal';
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
+import Spinner from '../../Components/UI/Spinner/Spinner';
 import axios from '../../_axios-order';
 
 // propsはimport元からのデータを取得
@@ -28,7 +29,8 @@ class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
+    loading: false
   }
 
   // 常に引数で最新のstate.ingredientsを処理している
@@ -90,7 +92,7 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    // this.setState( { loading: true } );
+    this.setState( { loading: true } );
 
     const order = {
       ingredients: this.state.ingredients,
@@ -108,8 +110,12 @@ class BurgerBuilder extends Component {
     }
 
     axios.post('/orders.json', order)
-      .then(res => console.log(res))
-      .catch(error => console.log(error));
+      .then(res => {
+        this.setState({ loading: false });
+      })
+      .catch(error => {
+        this.setState({ loading: false });
+      });
   }
 
   render() {
@@ -121,14 +127,23 @@ class BurgerBuilder extends Component {
     }
     // { salad: true, bacon: true, ... }
 
+    let orderSummary = <OrderSummary
+    ingredients={ this.state.ingredients }
+    price={ this.state.totalPrice }
+    purchaseCancelled={ this.purchaseCancelHandler }
+    purchaseContinued={ this.purchaseContinueHandler } />
+
+    if ( this.state.loading ) {
+      orderSummary = <Spinner />
+    }
+
     return (
       <>
-        <Modal show={ this.state.purchasing } modalClosed={ this.purchaseCancelHandler }>
-          <OrderSummary
-            ingredients={ this.state.ingredients }
-            price={ this.state.totalPrice }
-            purchaseCancelled={ this.purchaseCancelHandler }
-            purchaseContinued={ this.purchaseContinueHandler } />
+        <Modal
+          show={ this.state.purchasing }
+          modalClosed={ this.purchaseCancelHandler }>
+          {/* OrderSummary or Spinner */}
+          { orderSummary }
         </Modal>
         <Burger ingredients={ this.state.ingredients } />
         <BuildControls
