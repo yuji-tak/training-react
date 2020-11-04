@@ -22,7 +22,7 @@ class FullPost extends Component {
   loadData () {
     if (this.props.match.params.id) {
       // loadedPostがnullか、オブジェクトがあるかつidが異なっている
-      if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id != this.props.match.params.id)) {
+      if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== Number(this.props.match.params.id))) {
         // 後にidが続く必要がある為、/posts/
         axios.get('/posts/' + this.props.match.params.id)
           .then(res => {
