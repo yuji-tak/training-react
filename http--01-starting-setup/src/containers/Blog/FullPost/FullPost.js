@@ -10,13 +10,12 @@ class FullPost extends Component {
     loadedPost: null
   }
 
-  // なぜ元のBlog.jsのstateからデータを受けとらないのか？
-  componentDidUpdate() {
-    if (this.props.id) {
+  componentDidMount() {
+    if (this.props.match.params.id) {
       // loadedPostがnullか、オブジェクトがあるかつidが異なっている
-      if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
+      if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id)) {
         // 後にidが続く必要がある為、/posts/
-        axios.get('/posts/' + this.props.id)
+        axios.get('/posts/' + this.props.match.params.id)
           .then(res => {
             this.setState({ loadedPost: res.data });
           });
@@ -25,7 +24,7 @@ class FullPost extends Component {
   }
 
   deletePostHandler = () => {
-    axios.delete('/posts/' + this.props.id)
+    axios.delete('/posts/' + this.props.match.params.id)
       .then(res => {
         console.log(res);
       });
@@ -36,7 +35,7 @@ class FullPost extends Component {
         let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
 
         // これがないと、axiosの処理前にレンダリングを求めることになりエラー
-        if (this.props.id) {
+        if (this.props.match.params.id) {
           post = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
