@@ -41,7 +41,7 @@ class Posts extends Component {
       posts = this.state.posts.map(post => {
         // ()があると改行が可能になる
         return (
-        <Link to={ '/' + post.id } key={ post.id }>
+        <Link to={ '/posts/' + post.id } key={ post.id }>
           <Post
             title={ post.title }
             author={ post.author }
