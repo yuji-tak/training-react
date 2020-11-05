@@ -12,10 +12,22 @@ class Checkout extends Component {
     }
   }
 
+  // class内でこのリテラルを用いるとthisが使える
+  checktoutCancelledHandler = () => {
+    this.props.history.goBack();
+  }
+
+  checktoutContinuedHandler = () => {
+    this.props.history.replace('/checkout/contact-data')
+  }
+
   render () {
     return (
       <>
-        <CheckoutSummary ingredients={ this.state.ingredients }/>
+        <CheckoutSummary
+          ingredients={ this.state.ingredients }
+          checktoutCancelled={ this.checktoutCancelledHandler }
+          checktoutContinued={ this.checktoutContinuedHandler }/>
       </>
     );
   }
