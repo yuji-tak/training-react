@@ -1,10 +1,12 @@
 import React from 'react';
+// import { withRouter } from 'react-router-dom';
 
 import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 // propsはimport元からのデータを取得
 const burger = (props) => {
+  console.log(props)
   let transformedIngredients = Object.keys(props.ingredients)
     .map(igKey => {
       // オブジェクトのキーで値を一つずつ取り出し、[[オブジェクトの値]...]
@@ -32,4 +34,5 @@ const burger = (props) => {
   );
 };
 
+// export default withRouter(burger);
 export default burger;
