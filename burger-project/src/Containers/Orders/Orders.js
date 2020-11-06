@@ -32,8 +32,13 @@ class Orders extends Component {
   render() {
     return (
       <>
-        <Order />
-        <Order />
+        {/* 🥺ここでレンダリングする場合は、mapメソッド内は() */}
+        {this.state.orders.map(order => (
+          <Order
+            key={ order.id }
+            ingredients={ order.ingredients }
+            price={ order.price } />
+        ))}
       </>
     );
   }

@@ -6,7 +6,6 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 // propsはimport元からのデータを取得
 const burger = (props) => {
-  // console.log(props)
   let transformedIngredients = Object.keys(props.ingredients)
     .map(igKey => {
       // オブジェクトのキーで値を一つずつ取り出し、[[オブジェクトの値]...]
