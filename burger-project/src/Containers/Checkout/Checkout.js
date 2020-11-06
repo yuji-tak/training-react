@@ -13,13 +13,16 @@ class Checkout extends Component {
   }
 
   componentDidMount () {
+    // URLSearchParamsオブジェクトを返すコンストラクター
+    // URLSearchParams.entries()このオブジェクトに含まれる全てのキーと値のペアを列挙するためのiteratorを返す
+    // ?bacon=0&cheese=0&meat=1&salad=0
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
-    console.log('hihi', query)
     // Object.entries()で配列形式へ変換
     for ( let param of query.entries()) {
-      // ここでparamのデータは[ 'salad', '1' ]の形になる
+      // ここでparamのデータは['salad', '1']の形になる
       // +はNumber型へ変換
+      // ingredientsオブジェクトへプロパティと値を代入
       ingredients[param[0]] = +param[1];
     }
     this.setState({ ingredients: ingredients });
