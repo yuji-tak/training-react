@@ -12,6 +12,19 @@ class Checkout extends Component {
     }
   }
 
+  componentDidMount () {
+    const query = new URLSearchParams(this.props.location.search);
+    const ingredients = {};
+    console.log('hihi', query)
+    // Object.entries()で配列形式へ変換
+    for ( let param of query.entries()) {
+      // ここでparamのデータは[ 'salad', '1' ]の形になる
+      // +はNumber型へ変換
+      ingredients[param[0]] = +param[1];
+    }
+    this.setState({ ingredients: ingredients });
+  }
+
   // class内でこのリテラルを用いるとthisが使える
   checktoutCancelledHandler = () => {
     this.props.history.goBack();
