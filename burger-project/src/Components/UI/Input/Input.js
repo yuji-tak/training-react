@@ -5,7 +5,8 @@ import classes from './Input.module.css';
 const input = (props) => {
   let inputElement = null;
 
-  switch (props.inputType) {
+  // reactのjsxではキャメルケースは使えない？
+  switch (props.inputtype) {
     case ( 'input' ):
       // スプレッド演算子で展開しつつ渡す理由は？
       inputElement = <input className={ classes.InputElement } { ...props } />;
