@@ -17,7 +17,9 @@ class ContactData extends Component {
         },
         value: '',
         validation: {
-          required: true
+          required: true,
+          minLength: 5,
+          maxLength: 10
         },
         valid: false
       },
@@ -112,9 +114,19 @@ class ContactData extends Component {
   checkValidity(value, rules) {
     let isValid = false;
 
+    // 論理積&&を用い、求める全ての条件に合致する場合のみtrueを返している
     if (rules.required) {
       isValid = value.trim() !== '';
     }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
     return isValid;
   }
 
