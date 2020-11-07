@@ -29,6 +29,9 @@ const order = (props) => {
       );
   });
 
+  // 👑priceがqueryParamsから受け取れるロジックはどこ？？？
+  // Checkout.jsでURLSearchParamsをインスタンス化しprops.location.searchをパラメータとして渡しているあたりの記述
+
   return (
     <div className={ classes.Order }>
       <p>Ingredients: { ingredientOutput }</p>
