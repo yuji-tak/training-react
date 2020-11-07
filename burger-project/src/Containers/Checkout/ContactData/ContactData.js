@@ -15,7 +15,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Name'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       street: {
         elementType: 'input',
@@ -23,7 +27,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       zipCode: {
         elementType: 'input',
@@ -31,7 +39,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'ZIP Code'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       country: {
         elementType: 'input',
@@ -39,7 +51,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: 'input',
@@ -47,7 +63,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your E-mail'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       deliveryMethod: {
         elementType: 'select',
@@ -89,6 +109,15 @@ class ContactData extends Component {
       });
   }
 
+  checkValidity(value, rules) {
+    let isValid = false;
+
+    if (rules.required) {
+      isValid = value.trim() !== '';
+    }
+    return isValid;
+  }
+
   inputChangedHandler = (event, inputIdentifier) => {
     // 下記の方法ではshallow copyになるらしい
     const updatedOrderForm = {
@@ -98,6 +127,9 @@ class ContactData extends Component {
       ...updatedOrderForm[ inputIdentifier ]
     };
     updatedFormElement.value = event.target.value;
+    // checkValidityメソッドで左辺へ真偽値を代入している
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+      console.log(updatedFormElement)
     updatedOrderForm[ inputIdentifier ] = updatedFormElement;
     this.setState({ orderForm: updatedOrderForm })
   }
