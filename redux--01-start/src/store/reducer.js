@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+import * as actionTypes from './actions';
 
 const initialState = {
   counter: 0,
@@ -7,34 +7,34 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch ( action.type ) {
-    case 'INCREMENT':
+    case actionTypes.INCREMENT:
       // 元のstateは不変のまま、値をコピー？
       const newState = Object.assign({}, state);
       newState.counter = state.counter;
       // returnがある場合はbreakが不要
       return newState;
-    case 'DECREMENT':
+    case actionTypes.DECREMENT:
       return {
         // 引数のstateを展開しながら、counterプロパティの値を変更
         ...state,
         counter: state.counter - 1
       }
-    case 'ADD':
+    case actionTypes.ADD:
       return {
         ...state,
         counter: state.counter + action.val
       }
-    case 'SUBTRACT':
+    case actionTypes.SUBTRACT:
       return {
         ...state,
         counter: state.counter - action.val
       }
-    case 'STORE_RESULT':
+    case actionTypes.STORE_RESULT:
       return {
         ...state,
         results: state.results.concat({ id: new Date(),value: state.counter })
       }
-    case 'DELETE_RESULT':
+    case actionTypes.DELETE_RESULT:
       const updatedArray = state.results.filter(result => result.id !== action.resultElementId);
       return {
         ...state,
