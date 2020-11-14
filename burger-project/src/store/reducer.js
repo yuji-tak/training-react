@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux';
 import * as actionTypes from './actions';
 
 const initialState = {

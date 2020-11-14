@@ -15,7 +15,6 @@ import * as actionTypes from '../../store/actions';
 
 class BurgerBuilder extends Component {
   state = {
-    purchasable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -42,7 +41,7 @@ class BurgerBuilder extends Component {
         return sum + el;
         // 第二引数の0はinitialValue
       }, 0);
-    this.setState({ purchasable: sum > 0 })
+    return sum > 0;
   }
 
   // アロー関数でない場合、undefinedエラー
@@ -93,7 +92,7 @@ class BurgerBuilder extends Component {
           <BuildControls
             ingredientAdded={ this.props.onIngredientAdded }
             ingredientRemoved={ this.props.onIngredientRemoved }
-            purchasable={ this.state.purchasable }
+            purchasable={ this.updatePurchaseState(this.props.ings) }
             disabled={ disabledInfo }
             ordered={ this.purchaseHandler }
             price={ this.props.price } />
