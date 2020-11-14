@@ -11,20 +11,10 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../_axios-order';
 import * as actionTypes from '../../store/actions';
 
-// propsはimport元からのデータを取得
-
 // containersだけがstateのシングルソースという感じかな？
-
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  bacon: 0.7,
-  cheese: 0.4,
-  meat: 1.3
-}
 
 class BurgerBuilder extends Component {
   state = {
-    totalPrice: 4,
     purchasable: false,
     purchasing: false,
     loading: false,
@@ -55,42 +45,6 @@ class BurgerBuilder extends Component {
     this.setState({ purchasable: sum > 0 })
   }
 
-  // <コンポーネント type>はコンポーネント経由でimport元にデータを渡す
-  addIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type];
-    const updatedCount = oldCount + 1;
-    // なぜわざわざ展開するの？
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice + priceAddition;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-
-    this.updatePurchaseState(updatedIngredients);
-  };
-
-  removeIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type];
-    // なぜ < 0 ではダメなの？
-    if (oldCount <= 0) {
-      return;
-    }
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = INGREDIENT_PRICES[type]
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice - priceDeduction;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-
-    this.updatePurchaseState(updatedIngredients);
-  };
-
   // アロー関数でない場合、undefinedエラー
   purchaseHandler = () => {
     this.setState({ purchasing: true });
@@ -108,7 +62,7 @@ class BurgerBuilder extends Component {
     }
 
     // totalPriceをqueryParamsへ展開
-    queryParams.push('price=' + this.state.totalPrice );
+    queryParams.push('price=' + this.props.price );
 
     const queryString = queryParams.join('&');
     this.props.history.push({
@@ -142,13 +96,13 @@ class BurgerBuilder extends Component {
             purchasable={ this.state.purchasable }
             disabled={ disabledInfo }
             ordered={ this.purchaseHandler }
-            price={ this.state.totalPrice } />
+            price={ this.props.price } />
         </>
       );
       orderSummary = (
         <OrderSummary
           ingredients={ this.props.ings }
-          price={ this.state.totalPrice }
+          price={ this.props.price }
           purchaseCancelled={ this.purchaseCancelHandler }
           purchaseContinued={ this.purchaseContinueHandler } />
       );
@@ -172,7 +126,8 @@ class BurgerBuilder extends Component {
 
 const mapStateTorProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.ingredients,
+    price: state.totalPrice
   };
 }
 
