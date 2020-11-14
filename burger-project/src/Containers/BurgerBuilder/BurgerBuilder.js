@@ -32,13 +32,13 @@ class BurgerBuilder extends Component {
 
   componentDidMount () {
     // エンドポイント末尾の.jsonがポイント
-    axios.get('https://react-my-burger-ce65e.firebaseio.com/ingredients.json')
-      .then(res => {
-        this.setState({ ingredients: res.data });
-      })
-      .catch(error => {
-        this.setState({ error: true })
-      });
+    // axios.get('https://react-my-burger-ce65e.firebaseio.com/ingredients.json')
+    //   .then(res => {
+    //     this.setState({ ingredients: res.data });
+    //   })
+    //   .catch(error => {
+    //     this.setState({ error: true })
+    //   });
   }
 
   // 常に引数で最新のstate.ingredientsを処理している
