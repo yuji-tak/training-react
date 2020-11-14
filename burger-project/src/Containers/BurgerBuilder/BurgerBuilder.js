@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Burger from '../../Components/Burger/_Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
@@ -8,6 +9,7 @@ import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../_axios-order';
+import * as actionTypes from '../../store/actions';
 
 // propsはimport元からのデータを取得
 
@@ -22,7 +24,6 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     purchasing: false,
@@ -119,7 +120,7 @@ class BurgerBuilder extends Component {
 
   render() {
     const disabledInfo = {
-      ...this.state.ingredients
+      ...this.props.ings
     };
     for (let key in disabledInfo) {
       // 右辺は真偽値を返す
@@ -129,15 +130,15 @@ class BurgerBuilder extends Component {
 
     let orderSummary = null;
     let burger = this.state.error ? <p>Ingredients cant't be loaded!</p> : <Spinner />;
-    if (this.state.ingredients) {
+    if (this.props.ings) {
       // なんやねんこの書き方？？？
       // 変数に代入する時もルートコンポーネントをシングルにしないといけないってことか？
       burger = (
         <>
-          <Burger ingredients={ this.state.ingredients } />
+          <Burger ingredients={ this.props.ings } />
           <BuildControls
-            ingredientAdded={ this.addIngredientHandler }
-            ingredientRemoved={ this.removeIngredientHandler }
+            ingredientAdded={ this.props.onIngredientAdded }
+            ingredientRemoved={ this.props.onIngredientRemoved }
             purchasable={ this.state.purchasable }
             disabled={ disabledInfo }
             ordered={ this.purchaseHandler }
@@ -146,7 +147,7 @@ class BurgerBuilder extends Component {
       );
       orderSummary = (
         <OrderSummary
-          ingredients={ this.state.ingredients }
+          ingredients={ this.props.ings }
           price={ this.state.totalPrice }
           purchaseCancelled={ this.purchaseCancelHandler }
           purchaseContinued={ this.purchaseContinueHandler } />
@@ -169,4 +170,17 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapStateTorProps = state => {
+  return {
+    ings: state.ingredients
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onIngredientAdded: (ingName) => dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+    onIngredientRemoved: (ingName) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName })
+  };
+}
+
+export default connect(mapStateTorProps, mapDispatchToProps)( withErrorHandler(BurgerBuilder, axios));

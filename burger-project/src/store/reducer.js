@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
         ingredients: {
           ...state.ingredients,
           // payloadから材料のプロパティで抜いてくる感じかな
-          [action.ingredientName]: state[action.ingredientName] + 1
+          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
         }
       };
     case actionTypes.REMOVE_INGREDIENT:
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         ingredients: {
           ...state.ingredients,
-          [action.ingredientName]: state[action.ingredientName] - 1
+          [action.ingredientName]: state.ingredients[action.ingredientName] - 1
         }
       };
     default:
